@@ -1,7 +1,7 @@
 sudo: required
 language: python
 os: linux
-dist: trusty
+dist: bionic
 env:
   matrix:
     - TRAVIS_EXTRA_JOB_WORKAROUND=true
