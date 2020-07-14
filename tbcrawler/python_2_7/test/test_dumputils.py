@@ -3,7 +3,7 @@ import pytest
 import time
 import unittest
 import tempfile
-from urllib.request import urlopen
+from urllib2 import urlopen
 
 from tbcrawler.dumputils import Sniffer
 

@@ -11,7 +11,7 @@ common_apt_packages:
   - libpcap-dev # pcapy depends
   - gnupg-curl
 tbb_arch: 64
-tbb_release: 6.0.3
+tbb_release: 9.5.1
 tbb_locale: en-US
 
 tbb_username: "{{ ansible_ssh_user }}"

@@ -2,7 +2,7 @@ tor-browser-crawler [![Build Status](https://travis-ci.org/webfp/tor-browser-cra
 ===============
 ![DISCLAIMER](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Dialog-warning-orange.svg/40px-Dialog-warning-orange.svg.png "experimental")  **experimental - PLEASE BE CAREFUL. Intended for reasearch purposes.**
 
-We have freezed the repository with the source code that we used to collect data for our paper in ACM CCS’14 [“A Critical Analysis of Website Fingerprinting Attacks”](http://homes.esat.kuleuven.be/~mjuarezm/index_files/pdf/ccs14.pdf) [1]. The [release](https://github.com/webfp/tor-browser-crawler/releases/tag/webfp-paper) is tagged in this repository.
+We have freezed the repository with the source code that we used to collect data for our paper in ACM CCS’14 [“A Critical Analysis of Website Fingerprinting Attacks”](http://homes.esat.kuleuven.be/~mjuarezm/index_files/pdf/ccs14.pdf) [1]. 
 
 The crawler can be used in the similar website fingerprinting studies. It uses [Selenium](https://selenium-python.readthedocs.org/) to drive the **Tor Browser** and [stem](https://stem.torproject.org/) to control the tor. Our implementation started as a fork of  [tor-browser-selenium](https://github.com/isislovecruft/tor-browser-selenium) (by  @isislovecruft).
 
@@ -65,19 +65,9 @@ Use Docker container
 1. `make run` (or pass it the parameters, for example: `make run PARAMS="-t WebFP"`
 
 
-Sample crawl data
--------------
-You can download a sample of data collected using this crawler with the configuration used by Wang and Goldberg in their WPES'13 paper (namely 10 batches, 100 pages and 4 instances per page) from here:
-
-* [Crawl `140203_042843`](https://mega.co.nz/#!ekIXBTbZ!1bn7zSPuV5r8fS0zpp2hrMvNc4Xrj6F2oUbjlyBb87o)
-(SHA256: 06a007a41ca83bd24ad3f7e9f5e8f881bd81111a547cbfcf20f057be1b89d0dd)
-
-The crawl names include a timestamp. The list of crawls used in our study can be found in the appendix of the paper [1].
-
-
 Notes
 -------
-* Tested on *Xubuntu 14.04* and *Debian 7.8*.
+* Tested on *Ubuntu 18.04* and *Debian 10.4*.
 
 
 References

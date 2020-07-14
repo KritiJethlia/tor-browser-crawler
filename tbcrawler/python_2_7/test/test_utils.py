@@ -1,7 +1,7 @@
 import subprocess
 import tempfile
 import unittest
-from configparser import RawConfigParser
+from ConfigParser import RawConfigParser
 from os.path import isdir
 from shutil import rmtree
 from time import sleep

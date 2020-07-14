@@ -9,7 +9,7 @@ from scapy.all import PcapReader, wrpcap
 import psutil
 from pyvirtualdisplay import Display
 
-from .common import TimeoutException
+from common import TimeoutException
 from tbcrawler import common as cm
 
 

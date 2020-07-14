@@ -4,10 +4,10 @@ from time import sleep
 
 from selenium.common.exceptions import TimeoutException, WebDriverException
 
-from . import common as cm
-from . import utils as ut
-from .dumputils import Sniffer
-from .log import wl_log
+import common as cm
+import utils as ut
+from dumputils import Sniffer
+from log import wl_log
 
 
 class CrawlerBase(object):
@@ -23,7 +23,7 @@ class CrawlerBase(object):
         self.job = job
         wl_log.info("Starting new crawl")
         wl_log.info(pformat(self.job))
-        for self.job.batch in range(self.job.batches):
+        for self.job.batch in xrange(self.job.batches):
             wl_log.info("**** Starting batch %s ***" % self.job.batch)
             self.__do_batch()
             sleep(float(self.job.config['pause_between_batches']))
@@ -38,7 +38,7 @@ class CrawlerBase(object):
         restart forces to switch the entry guard.
         """
         with self.controller.launch():
-            for self.job.site in range(len(self.job.urls)):
+            for self.job.site in xrange(len(self.job.urls)):
                 if len(self.job.url) > cm.MAX_FNAME_LENGTH:
                     wl_log.warning("URL is too long: %s" % self.job.url)
                     continue
@@ -46,7 +46,7 @@ class CrawlerBase(object):
                 sleep(float(self.job.config['pause_between_sites']))
 
     def __do_instance(self):
-        for self.job.visit in range(self.job.visits):
+        for self.job.visit in xrange(self.job.visits):
             ut.create_dir(self.job.path)
             wl_log.info("*** Visit #%s to %s ***",
                         self.job.visit, self.job.url)
@@ -129,3 +129,4 @@ class CrawlJob(object):
     def __repr__(self):
         return "Batches: %s, Sites: %s, Visits: %s" \
                % (self.batches, len(self.urls), self.visits)
+

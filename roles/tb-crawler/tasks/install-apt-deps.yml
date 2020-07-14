@@ -1,5 +1,5 @@
 ---
-- name: Install python2.7, tcpdump, wireshark, and xvfb.
+- name: Install python3.7.4, tcpdump, wireshark, and xvfb.
   become: yes
   apt:
     name: "{{ item }}"

@@ -3,9 +3,9 @@ import subprocess
 import time
 import psutil
 
-from . import common as cm
-from . import utils as ut
-from .log import wl_log
+import common as cm
+import utils as ut
+from log import wl_log
 
 DUMPCAP_START_TIMEOUT = 10.0
 

@@ -8,8 +8,8 @@ from stem.control import Controller
 from stem.util import term
 from tbselenium.common import DEFAULT_TOR_DATA_PATH, DEFAULT_TOR_BINARY_PATH
 
-from . import common as cm
-from . import utils as ut
+import common as cm
+import utils as ut
 
 
 class TorController(object):
@@ -55,7 +55,7 @@ class TorController(object):
                 yield router_status.address
 
     def tor_log_handler(self, line):
-        print((term.format(line)))
+        print(term.format(line))
 
     def restart_tor(self):
         """Kill current Tor process and run a new one."""
@@ -81,8 +81,8 @@ class TorController(object):
             self.tmp_tor_data_dir = ut.clone_dir_temporary(self.tor_data_path)
             self.torrc_dict.update({'DataDirectory': self.tmp_tor_data_dir})
 
-        print(("Tor config: %s" % self.torrc_dict))
-        print((self.torrc_dict, self.tor_binary_path))
+        print("Tor config: %s" % self.torrc_dict)
+	print(self.torrc_dict, self.tor_binary_path)
         # the following may raise, make sure it's handled
         self.tor_process = stem.process.launch_tor_with_config(
             config=self.torrc_dict,
@@ -100,16 +100,19 @@ class TorController(object):
         try:
             with ut.timeout(cm.STREAM_CLOSE_TIMEOUT):
                 for stream in self.controller.get_streams():
-                    print(("Closing stream %s %s %s " %
-                           (stream.id, stream.purpose, stream.target_address)))
+                    print("Closing stream %s %s %s " %
+                          (stream.id, stream.purpose, stream.target_address))
                     self.controller.close_stream(stream.id)  # MISC reason
         except ut.TimeoutException:
             print("Closing streams timed out!")
         except:
             print("Exception closing stream")
 
+
     @contextmanager
     def launch(self):
         self.launch_tor_service()
         yield
         self.quit()
+
+

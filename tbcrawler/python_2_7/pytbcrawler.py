@@ -1,25 +1,24 @@
 import argparse
-import configparser
+import ConfigParser
 import sys
 import traceback
 from contextlib import contextmanager
 from logging import INFO, DEBUG
-from os import chdir
-from os.path import join, basename
+from os import stat, chdir
+from os.path import isfile, join, basename
 from shutil import copyfile
 from sys import maxsize, argv
-from urllib.parse import urlparse
-import subprocess
+from urlparse import urlparse
 
 from tbselenium.tbdriver import TorBrowserDriver
 from tbselenium.common import USE_RUNNING_TOR
 
-from . import common as cm
-from . import utils as ut
-from . import crawler as crawler_mod
-from .log import add_log_file_handler
-from .log import wl_log, add_symlink
-from .torcontroller import TorController
+import common as cm
+import utils as ut
+import crawler as crawler_mod
+from log import add_log_file_handler
+from log import wl_log, add_symlink
+from torcontroller import TorController
 
 
 def run():
@@ -31,6 +30,7 @@ def run():
 
     # Read URLs
     url_list = parse_url_list(args.url_file, args.start, args.stop)
+    host_list = [urlparse(url).hostname for url in url_list]
 
     # Configure logger
     add_log_file_handler(wl_log, cm.DEFAULT_CRAWL_LOG)
@@ -110,15 +110,14 @@ def parse_url_list(file_path, start, stop):
             url_list = file_contents.splitlines()
             url_list = url_list[start - 1:stop]
     except Exception as e:
-        wl_log.error("ERROR: while parsing URL list: {} \n{}".format(
+        ut.die("ERROR: while parsing URL list: {} \n{}".format(
             e, traceback.format_exc()))
-        sys.exit(1)
     return url_list
 
 
 def parse_arguments():
     # Read configuration file
-    config = configparser.RawConfigParser()
+    config = ConfigParser.RawConfigParser()
     config.read(cm.CONFIG_FILE)
 
     # Parse arguments
@@ -169,17 +168,6 @@ def parse_arguments():
     # Set verbose level
     wl_log.setLevel(DEBUG if args.verbose else INFO)
     del args.verbose
-
-    # Check if the chosen Congestion Control algorithm is actually running
-    out = subprocess.Popen(['sysctl', 'net.ipv4.tcp_congestion_control'],
-                           stdout=subprocess.PIPE,
-                           stderr=subprocess.STDOUT)
-
-    stdout, _ = out.communicate()
-    if args.output not in stdout.decode("utf-8"):
-        wl_log.error(
-            "You have not selected the right congestion control algorithm")
-        sys.exit(1)
 
     # Change results dir if output
     cm.RESULTS_DIR = "results_"+args.output if args.output != '' else cm.RESULTS_DIR
