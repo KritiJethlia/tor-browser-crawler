@@ -12,27 +12,36 @@ GUEST_SSH=/home/docker/.ssh
 HOST_SSH=${HOME}/.ssh
 
 ENV_VARS = \
-	--env="DISPLAY=${DISPLAY}" 					\
-	--env="XAUTHORITY=${XAUTH}"					\
-	--env="VIRTUAL_DISPLAY=$(VIRTUAL_DISPLAY)"  \
-	--env="TBB_PATH=${TBB_PATH}"
-VOLUMES = \
-	--volume=${XSOCK}:${XSOCK}					\
-	--volume=${XAUTH}:${XAUTH}					\
-	--volume=${HOST_SSH}:${GUEST_SSH}			\
-	--volume=`pwd`:${CRAWL_PATH}				\
+	-e XDG_RUNTIME_DIR=/tmp 		\
+	-e WAYLAND_DISPLAY=${WAYLAND_DISPLAY}	\
+	-e DISPLAY=${DISPLAY}  			\
+	-e TBB_PATH=${TBB_PATH}
 
-PARAMS=-c wang_and_goldberg -t WebFP -u ./etc/localized-urls-100-top.csv -s
+VOLUMES = \
+	-v "${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY}"	\
+	-v "${HOST_SSH}:${GUEST_SSH}"						\
+	-v "`pwd`:${CRAWL_PATH}"						\
+
+PARAMS=-c wang_and_goldberg -t WebFP -u ./etc/localized-urls-100-top.csv -s -x 1200x800
 
 build:
-	@docker build -t tbcrawl --rm .
+	docker build -t tbcrawl --rm .
 
 run:
-	@docker run -it --rm ${ENV_VARS} ${VOLUMES} --privileged tbcrawl ${CRAWL_PATH}/Entrypoint.sh "$(PARAMS)"
+	docker run -it --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --privileged tbcrawl ${CRAWL_PATH}/Entrypoint.sh "$(PARAMS)"
+
+run_bbr:
+	docker run -it --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --privileged tbcrawl ${CRAWL_PATH}/Entrypoint.sh "$(PARAMS) -o bbr"
+
+run_cubic:
+	docker run -it --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --privileged tbcrawl ${CRAWL_PATH}/Entrypoint.sh "$(PARAMS) -o cubic"
+
+run_reno:
+	docker run -it --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --privileged tbcrawl ${CRAWL_PATH}/Entrypoint.sh "$(PARAMS) -o reno"
 
 stop:
-	@docker stop `docker ps -a -q -f ancestor=tbcrawl`
-	@docker rm `docker ps -a -q -f ancestor=tbcrawl`
+	@docker stop `docker ps -a -q -f ancestor=tbcrawl:latest`
+	@docker rm `docker ps -a -q -f ancestor=tbcrawl:latest`
 
 destroy:
 	@docker rmi -f tbcrawl

@@ -22,11 +22,11 @@ from torcontroller import TorController
 
 
 def run():
-    # build dirs
-    build_crawl_dirs()
-
     # Parse arguments
     args, config = parse_arguments()
+
+    # build dirs
+    build_crawl_dirs()
 
     # Read URLs
     url_list = parse_url_list(args.url_file, args.start, args.stop)
@@ -77,11 +77,13 @@ def run():
     # die
     sys.exit(0)
 
+
 def setup_virtual_display(virt_display):
     """Start a virtual display with the given dimensions (if requested)."""
     if virt_display:
         w, h = (int(dim) for dim in virt_display.lower().split("x"))
         return ut.start_xvfb(w, h)
+
 
 def post_crawl():
     """Operations after the crawl."""
@@ -108,7 +110,8 @@ def parse_url_list(file_path, start, stop):
             url_list = file_contents.splitlines()
             url_list = url_list[start - 1:stop]
     except Exception as e:
-        ut.die("ERROR: while parsing URL list: {} \n{}".format(e, traceback.format_exc()))
+        ut.die("ERROR: while parsing URL list: {} \n{}".format(
+            e, traceback.format_exc()))
     return url_list
 
 
@@ -118,7 +121,8 @@ def parse_arguments():
     config.read(cm.CONFIG_FILE)
 
     # Parse arguments
-    parser = argparse.ArgumentParser(description='Crawl a list of URLs in multiple batches.')
+    parser = argparse.ArgumentParser(
+        description='Crawl a list of URLs in multiple batches.')
 
     # List of urls to be crawled
     parser.add_argument('-u', '--url-file', required=True,
@@ -129,8 +133,8 @@ def parse_arguments():
                         help="Crawler type to use for this crawl.",
                         default='Base')
     parser.add_argument('-o', '--output',
-                        help='Directory to dump the results (default=./results).',
-                        default=cm.CRAWL_DIR)
+                        help='Directory suffix to dump the results.',
+                        default='')
     parser.add_argument('-c', '--config',
                         help="Crawler tor driver and controller configurations.",
                         choices=config.sections(),
@@ -166,7 +170,9 @@ def parse_arguments():
     del args.verbose
 
     # Change results dir if output
-    cm.CRAWL_DIR = args.output
+    cm.RESULTS_DIR = "results_"+args.output if args.output != '' else cm.RESULTS_DIR
+    cm.CRAWL_DIR = cm.CRAWL_DIR.replace(
+        "results", "results_"+args.output if args.output != '' else "results")
     del args.output
 
     wl_log.debug("Command line parameters: %s" % argv)
@@ -182,6 +188,7 @@ class TorBrowserWrapper(object):
     used to launch driver/controller, and this method is the one used
     to implement the contextmanager.
     """
+
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs

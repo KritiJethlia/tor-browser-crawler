@@ -3,6 +3,9 @@ tags
 tbb/
 src/
 results/
+results_bbr/
+results_cubic/
+results_reno/
 .idea/
 .project
 .pydevproject

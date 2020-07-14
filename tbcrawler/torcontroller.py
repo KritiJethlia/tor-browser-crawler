@@ -19,12 +19,12 @@ class TorController(object):
                  tor_data_path=None,
                  torrc_dict={'controlport': '9051', 'socksport': '9050'},
                  pollute=True):
+
         assert (tbb_path or tor_binary_path and tor_data_path)
         if tbb_path:
             tbb_path = tbb_path.rstrip('/')
             tor_binary_path = join(tbb_path, DEFAULT_TOR_BINARY_PATH)
             tor_data_path = join(tbb_path, DEFAULT_TOR_DATA_PATH)
-
         # Make sure the paths exist
         assert (isfile(tor_binary_path) and isdir(tor_data_path))
         self.tor_binary_path = tor_binary_path
@@ -82,6 +82,7 @@ class TorController(object):
             self.torrc_dict.update({'DataDirectory': self.tmp_tor_data_dir})
 
         print("Tor config: %s" % self.torrc_dict)
+	print(self.torrc_dict, self.tor_binary_path)
         # the following may raise, make sure it's handled
         self.tor_process = stem.process.launch_tor_with_config(
             config=self.torrc_dict,

@@ -48,7 +48,8 @@ class CrawlerBase(object):
     def __do_instance(self):
         for self.job.visit in xrange(self.job.visits):
             ut.create_dir(self.job.path)
-            wl_log.info("*** Visit #%s to %s ***", self.job.visit, self.job.url)
+            wl_log.info("*** Visit #%s to %s ***",
+                        self.job.visit, self.job.url)
             with self.driver.launch():
                 try:
                     self.driver.set_page_load_timeout(cm.SOFT_VISIT_TIMEOUT)
@@ -64,7 +65,7 @@ class CrawlerBase(object):
             self.post_visit()
 
     def __do_visit(self):
-        with Sniffer(path=self.job.pcap_file, filter=cm.DEFAULT_FILTER):
+        with Sniffer(path=self.job.pcap_file, _filter=cm.DEFAULT_FILTER):
             sleep(1)  # make sure dumpcap is running
             try:
                 with ut.timeout(cm.HARD_VISIT_TIMEOUT):
@@ -128,5 +129,4 @@ class CrawlJob(object):
     def __repr__(self):
         return "Batches: %s, Sites: %s, Visits: %s" \
                % (self.batches, len(self.urls), self.visits)
-
 
