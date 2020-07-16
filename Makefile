@@ -1,15 +1,12 @@
-all: build test stop
+.PHONY: all run
 
-# this is to forward X apps to host:
-# See: http://stackoverflow.com/a/25280523/1336939
-XSOCK=/tmp/.X11-unix
-XAUTH=/tmp/.docker.xauth
+all: build run stop
 
-# paths
 TBB_PATH=/home/docker/tbcrawl/tor-browser_en-US/
 CRAWL_PATH=/home/docker/tbcrawl
 GUEST_SSH=/home/docker/.ssh
 HOST_SSH=${HOME}/.ssh
+CC_ALGOS = bbr cubic reno
 
 ENV_VARS = \
 	-e XDG_RUNTIME_DIR=/tmp 		\
@@ -28,16 +25,14 @@ build:
 	docker build -t tbcrawl --rm .
 
 run:
-	docker run -it --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --privileged tbcrawl ${CRAWL_PATH}/Entrypoint.sh "$(PARAMS)"
+	@for number in `seq 0 10`; do \
+		for algo in $(CC_ALGOS); do \
+			docker run -it --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --sysctl net.ipv4.tcp_congestion_control=$$algo --privileged tbcrawl ${CRAWL_PATH}/Entrypoint.sh "$(PARAMS) -y $$number" ; \
+		done \
+	done
 
-run_bbr:
-	docker run -it --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --privileged tbcrawl ${CRAWL_PATH}/Entrypoint.sh "$(PARAMS) -o bbr"
-
-run_cubic:
-	docker run -it --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --privileged tbcrawl ${CRAWL_PATH}/Entrypoint.sh "$(PARAMS) -o cubic"
-
-run_reno:
-	docker run -it --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --privileged tbcrawl ${CRAWL_PATH}/Entrypoint.sh "$(PARAMS) -o reno"
+run_limited:
+	@docker run -it --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --privileged tbcrawl 
 
 stop:
 	@docker stop `docker ps -a -q -f ancestor=tbcrawl:latest`

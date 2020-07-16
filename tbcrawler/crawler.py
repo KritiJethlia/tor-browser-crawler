@@ -11,11 +11,11 @@ from .log import wl_log
 
 
 class CrawlerBase(object):
-    def __init__(self, driver, controller, screenshots=True):
+    def __init__(self, driver, controller, algo, screenshots=True):
         self.driver = driver
         self.controller = controller
         self.screenshots = screenshots
-
+        self.algo = algo
         self.job = None
 
     def crawl(self, job):
@@ -47,18 +47,22 @@ class CrawlerBase(object):
 
     def __do_instance(self):
         for self.job.visit in range(self.job.visits):
+
+            self.job.cc_algo = self.algo
             ut.create_dir(self.job.path)
-            wl_log.info("*** Visit #%s to %s ***",
-                        self.job.visit, self.job.url)
+            wl_log.info("*** Visit #%s to %s using %s ***",
+                        self.job.visit, self.job.url, self.job.cc_algo)
             with self.driver.launch():
                 try:
-                    self.driver.set_page_load_timeout(cm.SOFT_VISIT_TIMEOUT)
+                    self.driver.set_page_load_timeout(
+                        cm.SOFT_VISIT_TIMEOUT)
                 except WebDriverException as seto_exc:
                     wl_log.error("Setting soft timeout %s", seto_exc)
                 self.__do_visit()
                 if self.screenshots:
                     try:
-                        self.driver.get_screenshot_as_file(self.job.png_file)
+                        self.driver.get_screenshot_as_file(
+                            self.job.png_file)
                     except WebDriverException:
                         wl_log.error("Cannot get screenshot.")
             sleep(float(self.job.config['pause_between_visits']))
@@ -94,16 +98,18 @@ class CrawlerMultitab(CrawlerWebFP):
 
 
 class CrawlJob(object):
-    def __init__(self, config, urls):
+    def __init__(self, config, urls, batch_offset):
         self.urls = urls
         self.visits = int(config['visits'])
         self.batches = int(config['batches'])
         self.config = config
+        self.batch_offset = batch_offset
 
         # state
         self.site = 0
         self.visit = 0
         self.batch = 0
+        self.cc_algo = cm.CC_ALGOS[0]
 
     @property
     def pcap_file(self):
@@ -115,7 +121,7 @@ class CrawlJob(object):
 
     @property
     def instance(self):
-        return self.batch * self.visits + self.visit
+        return (self.batch_offset + self.batch) * self.visits + self.visit
 
     @property
     def url(self):
@@ -123,9 +129,10 @@ class CrawlJob(object):
 
     @property
     def path(self):
-        attributes = [self.batch, self.site, self.instance]
+        attributes = [(self.batch_offset + self.batch),
+                      self.site, self.instance, self.cc_algo]
         return join(cm.CRAWL_DIR, "_".join(map(str, attributes)))
 
     def __repr__(self):
-        return "Batches: %s, Sites: %s, Visits: %s" \
-               % (self.batches, len(self.urls), self.visits)
+        return "Batches: %s, Sites: %s, Visits: %s, CC Algorithm: %s" \
+               % (self.batches, len(self.urls), self.visits, self.cc_algo)

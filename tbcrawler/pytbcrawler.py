@@ -51,11 +51,18 @@ def run():
 
     # Instantiate crawler
     crawl_type = getattr(crawler_mod, "Crawler" + args.type)
-    crawler = crawl_type(driver, controller, args.screenshots)
+
+    out = subprocess.Popen(['sysctl', 'net.ipv4.tcp_congestion_control'],
+                           stdout=subprocess.PIPE,
+                           stderr=subprocess.STDOUT)
+
+    stdout, _ = out.communicate()
+    crawler = crawl_type(driver, controller, stdout.decode("utf-8").split()[-1],
+                         args.screenshots)
 
     # Configure crawl
     job_config = ut.get_dict_subconfig(config, args.config, "job")
-    job = crawler_mod.CrawlJob(job_config, url_list)
+    job = crawler_mod.CrawlJob(job_config, url_list, args.batch_offset)
 
     # Run display
     xvfb_display = setup_virtual_display(args.virtual_display)
@@ -134,8 +141,8 @@ def parse_arguments():
                         help="Crawler type to use for this crawl.",
                         default='Base')
     parser.add_argument('-o', '--output',
-                        help='Directory suffix to dump the results.',
-                        default='')
+                        help='Directory to dump the results.',
+                        default=cm.RESULTS_DIR)
     parser.add_argument('-c', '--config',
                         help="Crawler tor driver and controller configurations.",
                         choices=config.sections(),
@@ -151,6 +158,9 @@ def parse_arguments():
     parser.add_argument('-x', '--virtual-display',
                         help='Dimensions of the virtual display, eg 1200x800',
                         default='')
+    parser.add_argument('-y', '--batch-offset',
+                        help='Batch offset',
+                        default=0, type=int)
     parser.add_argument('-s', '--screenshots', action='store_true',
                         help='Capture page screenshots',
                         default=False)
@@ -170,21 +180,8 @@ def parse_arguments():
     wl_log.setLevel(DEBUG if args.verbose else INFO)
     del args.verbose
 
-    # Check if the chosen Congestion Control algorithm is actually running
-    out = subprocess.Popen(['sysctl', 'net.ipv4.tcp_congestion_control'],
-                           stdout=subprocess.PIPE,
-                           stderr=subprocess.STDOUT)
-
-    stdout, _ = out.communicate()
-    if args.output not in stdout.decode("utf-8"):
-        wl_log.error(
-            "You have not selected the right congestion control algorithm")
-        sys.exit(1)
-
     # Change results dir if output
-    cm.RESULTS_DIR = "results_"+args.output if args.output != '' else cm.RESULTS_DIR
-    cm.CRAWL_DIR = cm.CRAWL_DIR.replace(
-        "results", "results_"+args.output if args.output != '' else "results")
+    cm.RESULTS_DIR = args.output
     del args.output
 
     wl_log.debug("Command line parameters: %s" % argv)

@@ -23,6 +23,9 @@ DEFAULT_SOCKS_PORT = 9051
 
 CRAWLER_TYPES = ['Base', 'WebFP', 'Multitab']
 
+# Congestion control algorithms to crawl
+CC_ALGOS = ['cubic', 'reno', 'bbr']
+
 # virtual display dimensions
 DEFAULT_XVFB_WIN_W = 1280
 DEFAULT_XVFB_WIN_H = 800
