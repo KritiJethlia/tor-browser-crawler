@@ -1,0 +1,98 @@
+2020-07-20 07:50:57,944 -                     INFO - *** Visit #0 to http://www.google.de using bbr ***
+2020-07-20 07:51:02,756 -                     INFO - dumpcap -P -a duration:120 -a filesize:40000 -i eth0 -s 0 -f 'tcp and not host 127.0.0.1 and not tcp port 22 and not tcp port 20' -w /home/docker/tbcrawl/results/200720_075051/0_0_0_bbr/capture.pcap
+2020-07-20 07:51:12,927 -                     INFO - Dumpcap killed. Capture size: 447988 Bytes /home/docker/tbcrawl/results/200720_075051/0_0_0_bbr/capture.pcap
+2020-07-20 07:51:17,907 -                     INFO - Filtering packets without a guard IP.
+2020-07-20 07:51:18,054 -                     INFO - *** Visit #1 to http://www.google.de using bbr ***
+2020-07-20 07:51:22,997 -                     INFO - dumpcap -P -a duration:120 -a filesize:40000 -i eth0 -s 0 -f 'tcp and not host 127.0.0.1 and not tcp port 22 and not tcp port 20' -w /home/docker/tbcrawl/results/200720_075051/0_0_1_bbr/capture.pcap
+2020-07-20 07:51:33,706 -                     INFO - Dumpcap killed. Capture size: 416496 Bytes /home/docker/tbcrawl/results/200720_075051/0_0_1_bbr/capture.pcap
+2020-07-20 07:51:38,607 -                     INFO - Filtering packets without a guard IP.
+2020-07-20 07:51:38,739 -                     INFO - *** Visit #2 to http://www.google.de using bbr ***
+2020-07-20 07:51:43,753 -                     INFO - dumpcap -P -a duration:120 -a filesize:40000 -i eth0 -s 0 -f 'tcp and not host 127.0.0.1 and not tcp port 22 and not tcp port 20' -w /home/docker/tbcrawl/results/200720_075051/0_0_2_bbr/capture.pcap
+2020-07-20 07:51:54,015 -                     INFO - Dumpcap killed. Capture size: 420137 Bytes /home/docker/tbcrawl/results/200720_075051/0_0_2_bbr/capture.pcap
+Makefile:28: recipe for target 'run' failed
+make: *** [run] Beendet
+2020-07-20 07:51:59,010 -                     INFO - Filtering packets without a guard IP.
+2020-07-20 07:51:59,147 -                     INFO - *** Visit #3 to http://www.google.de using bbr ***
+2020-07-20 07:52:04,090 -                     INFO - dumpcap -P -a duration:120 -a filesize:40000 -i eth0 -s 0 -f 'tcp and not host 127.0.0.1 and not tcp port 22 and not tcp port 20' -w /home/docker/tbcrawl/results/200720_075051/0_0_3_bbr/capture.pcap
+2020-07-20 07:52:13,933 -                     INFO - Dumpcap killed. Capture size: 473239 Bytes /home/docker/tbcrawl/results/200720_075051/0_0_3_bbr/capture.pcap
+2020-07-20 07:52:18,801 -                     INFO - Filtering packets without a guard IP.
+2020-07-20 07:52:23,988 -                     INFO - *** Visit #0 to http://www.facebook.com using bbr ***
+2020-07-20 07:52:27,962 -                     INFO - dumpcap -P -a duration:120 -a filesize:40000 -i eth0 -s 0 -f 'tcp and not host 127.0.0.1 and not tcp port 22 and not tcp port 20' -w /home/docker/tbcrawl/results/200720_075051/0_1_0_bbr/capture.pcap
+2020-07-20 07:52:39,907 -                     INFO - Dumpcap killed. Capture size: 775132 Bytes /home/docker/tbcrawl/results/200720_075051/0_1_0_bbr/capture.pcap
+2020-07-20 07:52:44,771 -                     INFO - Filtering packets without a guard IP.
+2020-07-20 07:52:44,967 -                     INFO - *** Visit #1 to http://www.facebook.com using bbr ***
+2020-07-20 07:52:49,676 -                     INFO - dumpcap -P -a duration:120 -a filesize:40000 -i eth0 -s 0 -f 'tcp and not host 127.0.0.1 and not tcp port 22 and not tcp port 20' -w /home/docker/tbcrawl/results/200720_075051/0_1_1_bbr/capture.pcap
+2020-07-20 07:52:59,940 -                     INFO - Dumpcap killed. Capture size: 671279 Bytes /home/docker/tbcrawl/results/200720_075051/0_1_1_bbr/capture.pcap
+2020-07-20 07:53:04,808 -                     INFO - Filtering packets without a guard IP.
+2020-07-20 07:53:04,979 -                     INFO - *** Visit #2 to http://www.facebook.com using bbr ***
+2020-07-20 07:53:09,794 -                     INFO - dumpcap -P -a duration:120 -a filesize:40000 -i eth0 -s 0 -f 'tcp and not host 127.0.0.1 and not tcp port 22 and not tcp port 20' -w /home/docker/tbcrawl/results/200720_075051/0_1_2_bbr/capture.pcap
+2020-07-20 07:53:22,053 -                     INFO - Dumpcap killed. Capture size: 805919 Bytes /home/docker/tbcrawl/results/200720_075051/0_1_2_bbr/capture.pcap
+2020-07-20 07:53:27,034 -                     INFO - Filtering packets without a guard IP.
+2020-07-20 07:53:27,276 -                     INFO - *** Visit #3 to http://www.facebook.com using bbr ***
+2020-07-20 07:53:32,074 -                     INFO - dumpcap -P -a duration:120 -a filesize:40000 -i eth0 -s 0 -f 'tcp and not host 127.0.0.1 and not tcp port 22 and not tcp port 20' -w /home/docker/tbcrawl/results/200720_075051/0_1_3_bbr/capture.pcap
+2020-07-20 07:53:43,534 -                     INFO - Dumpcap killed. Capture size: 1104057 Bytes /home/docker/tbcrawl/results/200720_075051/0_1_3_bbr/capture.pcap
+2020-07-20 07:53:48,410 -                     INFO - Filtering packets without a guard IP.
+2020-07-20 07:53:53,648 -                     INFO - *** Visit #0 to http://www.youtube.com using bbr ***
+2020-07-20 07:53:58,580 -                     INFO - dumpcap -P -a duration:120 -a filesize:40000 -i eth0 -s 0 -f 'tcp and not host 127.0.0.1 and not tcp port 22 and not tcp port 20' -w /home/docker/tbcrawl/results/200720_075051/0_2_0_bbr/capture.pcap
+2020-07-20 07:54:09,781 -                     WARNING - Dumpcap killed but cannot find capture file: /home/docker/tbcrawl/results/200720_075051/0_2_0_bbr/capture.pcap
+2020-07-20 07:54:14,934 -                     INFO - Filtering packets without a guard IP.
+2020-07-20 07:54:14,934 -                     ERROR - ERROR: filtering pcap file: [Errno 2] No such file or directory: '/home/docker/tbcrawl/results/200720_075051/0_2_0_bbr/capture.pcap'.
+2020-07-20 07:54:14,934 -                     ERROR - Check pcap: /home/docker/tbcrawl/results/200720_075051/0_2_0_bbr/capture.pcap
+2020-07-20 07:54:14,935 -                     INFO - *** Visit #1 to http://www.youtube.com using bbr ***
+Tor config: {'maxcircuitdirtiness': '600000', 'useentryguards': '0', 'controlport': '9051', 'socksport': '9050', 'socksbindaddress': '127.0.0.1'}
+({'maxcircuitdirtiness': '600000', 'useentryguards': '0', 'controlport': '9051', 'socksport': '9050', 'socksbindaddress': '127.0.0.1'}, '/home/docker/tbcrawl/tor-browser_en-US/Browser/TorBrowser/Tor/tor')
+Jul 20 07:50:52.341 [notice] Tor 0.4.3.5 (git-5ceb60e5ca61fec9) running on Linux with Libevent 2.1.11-stable, OpenSSL 1.1.1g, Zlib 1.2.11, Liblzma N/A, and Libzstd N/A.
+Jul 20 07:50:52.341 [notice] Tor can't help you if you use it wrong! Learn how to be safe at https://www.torproject.org/download/download#warning
+Jul 20 07:50:52.342 [warn] Skipping obsolete configuration option "SocksListenAddress".
+Jul 20 07:50:52.343 [warn] ControlPort is open, but no authentication method has been configured.  This means that any program on your computer can reconfigure your Tor.  That's bad!  You should upgrade your Tor controller as soon as possible.
+Jul 20 07:50:52.343 [notice] Opening Socks listener on 127.0.0.1:9050
+Jul 20 07:50:52.344 [notice] Opened Socks listener on 127.0.0.1:9050
+Jul 20 07:50:52.344 [notice] Opening Control listener on 127.0.0.1:9051
+Jul 20 07:50:52.344 [notice] Opened Control listener on 127.0.0.1:9051
+Jul 20 07:50:52.000 [warn] You are running Tor as root. You don't need to, and you probably shouldn't.
+Jul 20 07:50:52.000 [notice] Bootstrapped 0% (starting): Starting
+Jul 20 07:50:52.000 [notice] Starting with guard context "default"
+Jul 20 07:50:53.000 [notice] Bootstrapped 5% (conn): Connecting to a relay
+Jul 20 07:50:55.000 [notice] Bootstrapped 10% (conn_done): Connected to a relay
+Jul 20 07:50:55.000 [notice] Bootstrapped 14% (handshake): Handshaking with a relay
+Jul 20 07:50:55.000 [notice] Bootstrapped 15% (handshake_done): Handshake with a relay done
+Jul 20 07:50:55.000 [notice] Bootstrapped 20% (onehop_create): Establishing an encrypted directory connection
+Jul 20 07:50:55.000 [notice] Bootstrapped 25% (requesting_status): Asking for networkstatus consensus
+Jul 20 07:50:55.000 [notice] Bootstrapped 30% (loading_status): Loading networkstatus consensus
+Jul 20 07:50:55.000 [notice] I learned some more directory information, but not enough to build a circuit: We have no usable consensus.
+Jul 20 07:50:55.000 [notice] Bootstrapped 40% (loading_keys): Loading authority key certs
+Jul 20 07:50:56.000 [notice] The current consensus has no exit nodes. Tor can only build internal paths, such as paths to onion services.
+Jul 20 07:50:56.000 [notice] Bootstrapped 45% (requesting_descriptors): Asking for relay descriptors
+Jul 20 07:50:56.000 [notice] I learned some more directory information, but not enough to build a circuit: We need more microdescriptors: we have 0/6426, and can only build 0% of likely paths. (We have 0% of guards bw, 0% of midpoint bw, and 0% of end bw (no exits in consensus, using mid) = 0% of path bw.)
+Jul 20 07:50:56.000 [notice] Bootstrapped 50% (loading_descriptors): Loading relay descriptors
+Jul 20 07:50:56.000 [notice] The current consensus contains exit nodes. Tor can build exit and internal paths.
+Jul 20 07:50:56.000 [notice] Bootstrapped 55% (loading_descriptors): Loading relay descriptors
+Jul 20 07:50:56.000 [notice] Bootstrapped 63% (loading_descriptors): Loading relay descriptors
+Jul 20 07:50:56.000 [notice] Bootstrapped 68% (loading_descriptors): Loading relay descriptors
+Jul 20 07:50:56.000 [notice] Bootstrapped 75% (enough_dirinfo): Loaded enough directory info to build circuits
+Jul 20 07:50:57.000 [notice] Bootstrapped 80% (ap_conn): Connecting to a relay to build circuits
+Jul 20 07:50:57.000 [notice] Bootstrapped 85% (ap_conn_done): Connected to a relay to build circuits
+Jul 20 07:50:57.000 [notice] Bootstrapped 89% (ap_handshake): Finishing handshake with a relay to build circuits
+Jul 20 07:50:57.000 [notice] Bootstrapped 90% (ap_handshake_done): Handshake finished with a relay to build circuits
+Jul 20 07:50:57.000 [notice] Bootstrapped 95% (circuit_create): Establishing a Tor circuit
+Jul 20 07:50:57.000 [notice] Bootstrapped 100% (done): Done
+Traceback (most recent call last):
+  File "bin/tbcrawler.py", line 16, in <module>
+    run()
+  File "/home/docker/tbcrawl/tbcrawler/pytbcrawler.py", line 73, in run
+    crawler.crawl(job)
+  File "/home/docker/tbcrawl/tbcrawler/crawler.py", line 28, in crawl
+    self.__do_batch()
+  File "/home/docker/tbcrawl/tbcrawler/crawler.py", line 45, in __do_batch
+    self.__do_instance()
+  File "/home/docker/tbcrawl/tbcrawler/crawler.py", line 55, in __do_instance
+    with self.driver.launch():
+  File "/usr/lib/python3.7/contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "/home/docker/tbcrawl/tbcrawler/pytbcrawler.py", line 215, in launch
+    self.driver = TorBrowserDriver(*self.args, **self.kwargs)
+  File "/usr/local/lib/python3.7/dist-packages/tbselenium/tbdriver.py", line 51, in __init__
+    self.binary = self.get_tb_binary(logfile=tbb_logfile_path)
+  File "/usr/local/lib/python3.7/dist-packages/tbselenium/tbdriver.py", line 257, in get_tb_binary
+    tbb_logfile = open(logfile, 'a+') if logfile else None
+FileNotFoundError: [Errno 2] No such file or directory: '/home/docker/tbcrawl/results/200720_075051/logs/ff.log'
