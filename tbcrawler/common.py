@@ -49,7 +49,7 @@ CRAWL_DIR = join(RESULTS_DIR, strftime('%y%m%d_%H%M%S'))
 LOGS_DIR = join(CRAWL_DIR, 'logs')
 DEFAULT_CRAWL_LOG = join(LOGS_DIR, 'crawl.log')
 DEFAULT_TOR_LOG = join(LOGS_DIR, 'tor.log')
-DEFAULT_FF_LOG = join(LOGS_DIR, 'ff.log')
+DEFAULT_FF_LOG = None # join(LOGS_DIR, 'ff.log')
 TEST_DIR = join(SRC_DIR, 'test')
 TBB_DIR = join(BASE_DIR, 'tor-browser_en-US')
 # Top URLs localized (DE) to prevent the effect of localization
