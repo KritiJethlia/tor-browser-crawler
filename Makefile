@@ -25,9 +25,12 @@ build:
 	docker build -t tbcrawl --rm .
 
 run:
+	sudo setcap 'CAP_NET_RAW+eip CAP_NET_ADMIN+eip' /usr/bin/dumpcap
+	sudo ifconfig eth0 mtu 1500
+	sudo ethtool -K eth0 tx off rx off tso off gso off gro off lro off
 	@for number in `seq 0 10`; do \
 		for algo in $(CC_ALGOS); do \
-			docker run --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --sysctl net.ipv4.tcp_congestion_control=$$algo --privileged tbcrawl ${CRAWL_PATH}/Entrypoint.sh "$(PARAMS) -y $$number" ; \
+			docker run -it --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --sysctl net.ipv4.tcp_congestion_control=$$algo --privileged tbcrawl ${CRAWL_PATH}/Entrypoint.sh "$(PARAMS) -y $$number" ; \
 		done \
 	done
 

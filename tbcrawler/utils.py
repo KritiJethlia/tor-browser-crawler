@@ -97,7 +97,7 @@ def filter_pcap(pcap_path, iplist):
     # we don't need the payload stripping                                        
     pcap_filtered = []                                                           
     orig_pcap = pcap_path + ".original"                                          
-    copyfile(pcap_path, orig_pcap)                                               
+    #copyfile(pcap_path, orig_pcap)                                               
     with PcapReader(orig_pcap) as preader:                                       
         for p in preader:                                                        
             if 'TCP' in p:                                                       
