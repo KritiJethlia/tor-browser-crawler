@@ -30,7 +30,7 @@ run:
 	sudo ethtool -K eth0 tx off rx off tso off gso off gro off lro off
 	@for number in `seq 0 10`; do \
 		for algo in $(CC_ALGOS); do \
-			docker run -it --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --sysctl net.ipv4.tcp_congestion_control=$$algo --privileged tbcrawl ${CRAWL_PATH}/Entrypoint.sh "$(PARAMS) -y $$number" ; \
+			docker run --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --sysctl net.ipv4.tcp_congestion_control=$$algo --privileged tbcrawl ${CRAWL_PATH}/Entrypoint.sh "$(PARAMS) -y $$number" ; \
 		done \
 	done
 
