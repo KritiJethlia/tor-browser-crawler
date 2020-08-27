@@ -49,7 +49,7 @@ class CrawlerBase(object):
         for self.job.visit in range(self.job.visits):
 
             self.job.cc_algo = self.algo
-            ut.create_dir(self.job.path)
+            #ut.create_dir(self.job.path)
             wl_log.info("*** Visit #%s to %s using %s ***",
                         self.job.visit, self.job.url, self.job.cc_algo)
             with self.driver.launch():
@@ -113,11 +113,15 @@ class CrawlJob(object):
 
     @property
     def pcap_file(self):
-        return join(self.path, "capture.pcap")
+        self.attributes = [(self.batch_offset + self.batch), self.site, self.instance, self.cc_algo]
+        prefix = "_".join(map(str, self.attributes))
+        return join(self.path, prefix + "_capture.pcap")
 
     @property
     def png_file(self):
-        return join(self.path, "screenshot.png")
+        self.attributes = [(self.batch_offset + self.batch), self.site, self.instance, self.cc_algo]
+        prefix = "_".join(map(str, self.attributes))
+        return join(self.path, prefix + "_screenshot.png")
 
     @property
     def instance(self):
@@ -129,9 +133,7 @@ class CrawlJob(object):
 
     @property
     def path(self):
-        attributes = [(self.batch_offset + self.batch),
-                      self.site, self.instance, self.cc_algo]
-        return join(cm.CRAWL_DIR, "_".join(map(str, attributes)))
+        return cm.CRAWL_DIR
 
     def __repr__(self):
         return "Batches: %s, Sites: %s, Visits: %s, CC Algorithm: %s" \
