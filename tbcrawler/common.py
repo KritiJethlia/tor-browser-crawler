@@ -1,6 +1,7 @@
 from os.path import join, dirname, abspath, pardir
 from time import strftime
 
+IGNORE_PAGES = [-1,65, 70, 92, 31, 52, 53, 66, 55, 36, 22, 18]
 
 # defaults for batch and instance numbers
 NUM_BATCHES = 10

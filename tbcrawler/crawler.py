@@ -42,6 +42,9 @@ class CrawlerBase(object):
                 if len(self.job.url) > cm.MAX_FNAME_LENGTH:
                     wl_log.warning("URL is too long: %s" % self.job.url)
                     continue
+                if self.job.site in cm.IGNORE_PAGES:
+                    continue
+
                 self.__do_instance()
                 sleep(float(self.job.config['pause_between_sites']))
 
