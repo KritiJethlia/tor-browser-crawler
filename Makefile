@@ -23,6 +23,7 @@ PARAMS=-c wang_and_goldberg -t WebFP -u ./etc/localized-urls-100-top.csv -s -x 1
 
 build:
 	sudo apt-get update -y 
+	sudo apt install net-tools -y
 	sudo apt-get install tshark -y 
 	sudo snap install docker
 	docker build -t tbcrawl --rm .
