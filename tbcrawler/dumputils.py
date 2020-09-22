@@ -41,7 +41,7 @@ class Sniffer(object):
         if pcap_path:
             self.set_pcap_path(pcap_path)
         prefix = ""
-        command = '{}dumpcap -P -a duration:{} -a filesize:{} -i eth0 -s 0 -f \'{}\' -w {}'\
+        command = '{}dumpcap -P -a duration:{} -a filesize:{} -i eth0 -s 128 -f \'{}\' -w {}'\
             .format(prefix, cm.SOFT_VISIT_TIMEOUT, cm.MAX_DUMP_SIZE,
                     self.pcap_filter, self.pcap_file)
         wl_log.info(command)

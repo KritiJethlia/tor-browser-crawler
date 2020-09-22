@@ -1,6 +1,6 @@
 .PHONY: all run
 
-all: build run stop
+all: build run
 
 TBB_PATH=/home/docker/tbcrawl/tor-browser_en-US/
 CRAWL_PATH=/home/docker/tbcrawl
@@ -22,17 +22,23 @@ VOLUMES = \
 PARAMS=-c wang_and_goldberg -t WebFP -u ./etc/localized-urls-100-top.csv -s -x 1200x800
 
 build:
+	sudo apt-get update -y 
+	sudo apt-get install tshark -y 
+	sudo snap install docker
 	docker build -t tbcrawl --rm .
 
 run:
 	sudo setcap 'CAP_NET_RAW+eip CAP_NET_ADMIN+eip' /usr/bin/dumpcap
 	sudo ifconfig eth0 mtu 1500
 	sudo ethtool -K eth0 tx off rx off tso off gso off gro off lro off
-	@for number in `seq 0 10`; do \
+	@for number in `seq 0 5`; do \
 		for algo in $(CC_ALGOS); do \
 			docker run --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --sysctl net.ipv4.tcp_congestion_control=$$algo --privileged tbcrawl ${CRAWL_PATH}/Entrypoint.sh "$(PARAMS) -y $$number" ; \
 		done \
 	done
+
+check_tso: 
+	tshark -Tfields -e frame.len -r test.pcap | sort -u | head
 
 run_limited:
 	@docker run -it --rm ${ENV_VARS} ${VOLUMES} --user=$(id -u):$(id -g) --privileged tbcrawl 
